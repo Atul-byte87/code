@@ -1,0 +1,148 @@
+import pandas as pd
+import numpy as np
+import tkinter
+import matplotlib.pyplot as plt
+from tkinter import *
+top = tkinter.Tk()
+L1 = Label(top, text="TV Show Popularity")
+L1.pack( side = TOP)
+C = tkinter.Canvas(top, height=150, width=900)
+
+def bargraph1(ynt,yne,ype):
+    x=np.arange(3)
+    y=ynt
+    y1=yne
+    y2=ype
+    width = 0.4
+    plt.xticks(x,["Bigboss","MTV Roadies","India's Got Talent"])
+    plt.bar(x-0.20,y,width,color='red',label = "negative review")
+    plt.bar(x,y1,width,color='blue',label = "neutral review" )
+    plt.bar(x,y2,width,color='yellow',label = "positive review", align = 'edge' )
+    plt.title('Bar Graph')
+    plt.ylabel('Y AXIS')
+    plt.xlabel('X AXIS')
+    plt.legend()
+    plt.show()
+
+
+
+
+
+def filec():
+    df=pd.read_csv("Book.csv")
+    a=df['bigboss'].values
+    b=df['roadies'].values
+    c=df['IGT'].values
+    negative=['pathetic','boring','worse','worst','maniac','bad','underrated','1 star']
+    neutral=['average','nice','fine','good','worth it','not bad','good','better','medioker','likely']
+    positive=['5 star','overrated', 'awesome', 'too good','glorius', 'good one', 'dominating','excellent','best','brilliant','awesome','great','exciting']
+    asum=0
+    bsum=0
+    csum=0
+    a1count=0
+    a2count=0
+    a3count=0
+    b1count=0
+    b2count=0
+    b3count=0
+    c1count=0
+    c2count=0
+    c3count=0
+    for i in range(1,12):
+        for j in range(0,7):
+            if a[i]==negative[j]:
+                asum=asum-10
+                a1count=a1count+1
+    for i in range(1,12):
+        for j in range(0,9):
+            if a[i]==neutral[j]:
+                asum=asum+5
+                a2count=a2count+1
+    for i in range(1,12):
+        for j in range(0,12):
+            if a[i]==positive[j]:
+                asum=asum+10
+                a3count=a3count+1
+    
+    
+    
+    for i in range(1,12):
+        for j in range(0,7):
+            if b[i]==negative[j]:
+                bsum=bsum-10
+                b1count=b1count+1
+    for i in range(1,12):
+        for j in range(0,9):
+            if b[i]==neutral[j]:
+                bsum=bsum+5
+                b2count=b2count+1
+    for i in range(1,12):
+        for j in range(0,12):
+            if b[i]==positive[j]:
+                bsum=bsum+10
+                b3count=b3count+1
+                
+    
+    for i in range(1,12):
+        for j in range(0,7):
+            if c[i]==negative[j]:
+                csum=csum-10
+                c1count=c1count+1
+    for i in range(1,12):
+        for j in range(0,9):
+            if c[i]==neutral[j]:
+                csum=csum+5
+                c2count=c2count+1
+    for i in range(1,12):
+        for j in range(0,12):
+            if c[i]==positive[j]:
+                csum=csum+10
+                c3count=c3count+1
+    
+    negl=[a1count,b1count,c1count]
+    neul=[a2count,b2count,c2count]
+    posl=[a3count,b3count,c3count]
+    
+    if asum>bsum&csum:
+        print("According to  the data Bigboss is the best reviewed show")
+    elif bsum>asum&csum:
+        print("According to  the data MTV Roadies is the best reviewed show")
+    else:
+        print("According to  the data India's Got Talent is the best reviewed show")
+        
+                
+    bargraph1(negl,neul,posl)
+                
+                     
+           
+frame = Frame(top)
+frame.pack()
+
+bottomframe = Frame(top)
+bottomframe.pack( side = BOTTOM )
+
+
+blackbutton = Button(bottomframe, height= 8, width=20, text="Show Popularity", fg="black")
+blackbutton['command']=filec
+blackbutton.pack( side = BOTTOM )
+
+
+mb=  Menubutton ( top, text="All TV Shows ", relief=RAISED , height = 5 , width = 30 )
+
+mb.menu  =  Menu ( mb, tearoff = 0 )
+mb["menu"]  =  mb.menu
+    
+bb  = IntVar()
+mt = IntVar()
+ig = IntVar()
+
+mb.menu.add_checkbutton ( label="Bigg Boss",
+                          variable=bb )
+mb.menu.add_checkbutton ( label="MTV Roadies",
+                          variable=mt )
+mb.menu.add_checkbutton ( label="India's Got Talent",
+                          variable=ig )
+
+mb.pack()
+C.pack()
+top.mainloop()
